@@ -1,5 +1,10 @@
 const client = require("./client");
-const { users, activities, routines, routine_activities } = require("./seedData");
+const {
+  users,
+  activities,
+  routines,
+  routine_activities,
+} = require("./seedData");
 
 async function dropTables() {
   // Drop all tables in order
@@ -57,28 +62,28 @@ async function populateTables() {
         INSERT INTO users(username, password)
         VALUES($1, $2);
     `,
-      ["jeff", "12345"]
+      [users]
     );
     await client.query(
       `
         INSERT INTO routines(creator_id, is_public, name, goal)
         VALUES($1, $2, $3, $4);
     `,
-      [1, true, "Sandwich", "get sandwich"]
+      [routines]
     );
     await client.query(
       `
         INSERT INTO activities(name, description)
         VALUES($1, $2);
     `,
-      ["Walk", "walk in park"]
+      [activities]
     );
     await client.query(
       `
         INSERT INTO routine_activities(routine_id, activity_id, duration, count)
         VALUES($1, $2, $3, $4);
     `,
-      [1, 1, 20, 1]
+      [routine_activities]
     );
   } catch (err) {
     throw err;

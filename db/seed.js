@@ -5,10 +5,10 @@ async function dropTables() {
   // Drop all tables in order
   try {
     await client.query(`
-        DROP TABLE IF EXISTS activities;
-        DROP TABLE IF EXISTS routines;
-        DROP TABLE IF EXISTS routine_activities;
-        DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS routine_activities;
+    DROP TABLE IF EXISTS routines;
+    DROP TABLE IF EXISTS activities;
+    DROP TABLE IF EXISTS users;
     `);
   } catch (err) {
     throw err;
@@ -25,22 +25,22 @@ async function createTables() {
             password VARCHAR(255) NOT NULL
         );
         CREATE TABLE routines(
-            id SERIAL PRIMARY KEY
-            creator_id INTEGER REFERENCES users(id)
-            is_public BOOLEAN DEFAULT false
-            name VARCHAR(255) UNIQUE NOT NULL
+            id SERIAL PRIMARY KEY,
+            creator_id INTEGER REFERENCES users(id),
+            is_public BOOLEAN DEFAULT false,
+            name VARCHAR(255) UNIQUE NOT NULL,
             goal TEXT NOT NULL
         );
         CREATE TABLE activities(
-            id SERIAL PRIMARY KEY
-            name VARCHAR(255) UNIQUE NOT NULL
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) UNIQUE NOT NULL,
             description TEXT NOT NULL
         );
         CREATE TABLE routine_activities(
-            id SERIAL PRIMARY KEY
-            routine_id INTEGER REFERENCES routines (id)
-            activity_id INTEGER REFERENCES activities (id)
-            duration INTEGER
+            id SERIAL PRIMARY KEY,
+            routine_id INTEGER REFERENCES routines (id),
+            activity_id INTEGER REFERENCES activities (id),
+            duration INTEGER,
             count INTEGER
         );
     `);
@@ -52,19 +52,34 @@ async function createTables() {
 async function populateTables() {
   // Seed tables with dummy data from seedData.js
   try {
-    await client.query(`
+    await client.query(
+      `
         INSERT INTO users(username, password)
-        VALUES("jeff", "12345");
-
+        VALUES($1, $2);
+    `,
+      ["jeff", "12345"]
+    );
+    await client.query(
+      `
         INSERT INTO routines(creator_id, is_public, name, goal)
-        VALUES(1, true, "Sandwich", "get sandwich");
-
+        VALUES($1, $2, $3, $4);
+    `,
+      [1, true, "Sandwich", "get sandwich"]
+    );
+    await client.query(
+      `
         INSERT INTO activities(name, description)
-        VALUES("Walk", "walk in park");
-
+        VALUES($1, $2);
+    `,
+      ["Walk", "walk in park"]
+    );
+    await client.query(
+      `
         INSERT INTO routine_activities(routine_id, activity_id, duration, count)
-        VALUES(1, 1, 20, 1);
-    `);
+        VALUES($1, $2, $3, $4);
+    `,
+      [1, 1, 20, 1]
+    );
   } catch (err) {
     throw err;
   }
@@ -73,9 +88,15 @@ async function populateTables() {
 async function rebuildDb() {
   client.connect();
   try {
+    console.log("Dropping Tables...");
     await dropTables();
+    console.log("Tables Dropped");
+    console.log("Creating Tables...");
     await createTables();
+    console.log("Tables Created");
+    console.log("Populating Tables...");
     await populateTables();
+    console.log("Tables Populated");
   } catch (error) {
     console.error(error);
   } finally {

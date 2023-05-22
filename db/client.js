@@ -1,5 +1,5 @@
-import { Client } from "pg";
+const { Client } = require("pg");
 
-const client = new Client("postgres://localhost:5432/fitness-dev");
+const client = new Client("postgres://localhost:5432/fitnesstracker");
 
 module.exports = client;

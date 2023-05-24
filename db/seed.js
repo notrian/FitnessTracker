@@ -1,20 +1,10 @@
-const { getActivityById, getAllActivities, createActivity, updateActivity } = require("./adapters/activities");
-const { getRoutineActivityById, addActivityToRoutine, updateRoutineActivity, getRoutineActivityByRoutine, destroyRoutineActivity } = require("./adapters/routine_activites");
-const {
-  destroyRoutine,
-  getRoutineById,
-  getRoutinesWithoutActivities,
-  getAllRoutines,
-  getAllPublicRoutines,
-  getAllRoutinesByUser,
-  getAllPublicRoutinesByUser,
-  getPublicRoutinesByActivity,
-  createRoutine,
-  updateRoutine,
-} = require("./adapters/routines");
-const { createUser, getUser, getUserById, getUserByUsername } = require("./adapters/users");
 const client = require("./client");
-const { users, activities, routines, routine_activities } = require("./seedData");
+const {
+  users,
+  activities,
+  routines,
+  routine_activities,
+} = require("./seedData");
 
 async function dropTables() {
   // Drop all tables in order

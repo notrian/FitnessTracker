@@ -1,10 +1,20 @@
-const client = require("./client");
+const { getActivityById, getAllActivities, createActivity, updateActivity } = require("./adapters/activities");
+const { getRoutineActivityById, addActivityToRoutine, updateRoutineActivity, getRoutineActivityByRoutine, destroyRoutineActivity } = require("./adapters/routine_activites");
 const {
-  users,
-  activities,
-  routines,
-  routine_activities,
-} = require("./seedData");
+  destroyRoutine,
+  getRoutineById,
+  getRoutinesWithoutActivities,
+  getAllRoutines,
+  getAllPublicRoutines,
+  getAllRoutinesByUser,
+  getAllPublicRoutinesByUser,
+  getPublicRoutinesByActivity,
+  createRoutine,
+  updateRoutine,
+} = require("./adapters/routines");
+const { createUser, getUser, getUserById, getUserByUsername } = require("./adapters/users");
+const client = require("./client");
+const { users, activities, routines, routine_activities } = require("./seedData");
 
 async function dropTables() {
   // Drop all tables in order
@@ -59,31 +69,31 @@ async function populateTables() {
   try {
     await client.query(
       `
-        INSERT INTO users(username, password)
-        VALUES($1, $2);
-    `,
-      [users]
+      INSERT INTO users(username, password)
+      VALUES($1, $2);
+      `,
+      users
     );
     await client.query(
       `
         INSERT INTO routines(creator_id, is_public, name, goal)
         VALUES($1, $2, $3, $4);
-    `,
-      [routines]
+        `,
+      routines
     );
     await client.query(
       `
-        INSERT INTO activities(name, description)
-        VALUES($1, $2);
-    `,
-      [activities]
+          INSERT INTO activities(name, description)
+          VALUES($1, $2);
+          `,
+      activities
     );
     await client.query(
       `
         INSERT INTO routine_activities(routine_id, activity_id, duration, count)
         VALUES($1, $2, $3, $4);
     `,
-      [routine_activities]
+      routine_activities
     );
   } catch (err) {
     throw err;

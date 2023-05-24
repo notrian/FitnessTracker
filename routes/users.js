@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { createUser } = require("../db/adapters/users");
 
-router.post("/register", (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -17,8 +17,9 @@ router.post("/register", (req, res, next) => {
       message: "Password must be at least 8 characters long",
     });
   }
-  const user = createUser(username, password);
+  const user = await createUser(username, password);
   console.log(user);
+  res.send({ status: "success", message: "user registered", data: user });
 });
 
 module.exports = router;

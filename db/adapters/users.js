@@ -6,19 +6,21 @@ const saltRounds = 10;
 async function createUser(username, password) {
   try {
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
+    console.log(hashedPassword);
 
     const { rows } = await client.query(
       `
-      INSERT INTO users(username, password) 
+      INSERT INTO users("username", "password") 
       VALUES($1, $2) 
-      ON CONFLICT (username) DO NOTHING 
+      ON CONFLICT ("username") DO NOTHING 
       RETURNING *;
     `,
       [username, hashedPassword]
     );
-
+    console.log(rows);
     return rows;
   } catch (error) {
+    console.log("error");
     throw error;
   }
 }

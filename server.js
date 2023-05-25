@@ -3,6 +3,9 @@ const express = require("express");
 const morgan = require("morgan");
 const PORT = 3000;
 
+const client = require("./db/client.js");
+client.connect();
+
 const app = express();
 
 // Middleware

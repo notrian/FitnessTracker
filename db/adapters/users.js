@@ -6,7 +6,6 @@ const saltRounds = 10;
 async function createUser(username, password) {
   try {
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
-    console.log(hashedPassword);
 
     const { rows } = await client.query(
       `
@@ -17,10 +16,8 @@ async function createUser(username, password) {
     `,
       [username, hashedPassword]
     );
-    console.log(rows);
     return rows;
   } catch (error) {
-    console.log("error");
     throw error;
   }
 }
@@ -40,7 +37,11 @@ async function getUser(username, password) {
 
     const res = bcrypt.compareSync(password, user.password);
 
-    return res;
+    if (res) {
+      return user;
+    } else {
+      throw error;
+    }
   } catch (error) {
     throw error;
   }

@@ -1,10 +1,6 @@
 const client = require("./client");
-const {
-  users,
-  activities,
-  routines,
-  routine_activities,
-} = require("./seedData");
+
+const { users, activities, routines, routine_activities } = require("./seedData");
 
 async function dropTables() {
   // Drop all tables in order

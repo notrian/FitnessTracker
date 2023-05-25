@@ -1,6 +1,9 @@
 require("dotenv").config();
+
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const PORT = 3000;
 
 const client = require("./db/client.js");
@@ -11,16 +14,19 @@ const app = express();
 // Middleware
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cors());
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // Routes
 app.use("/api", require("./routes"));
 
 // Error Handler
 app.use((err, req, res, next) => {
+  res.status(err.status);
   res.send({
-    message: err.message,
-    name: err.name,
-    stack: err.stack,
+    status: err.status,
+    status_message: err.status_message,
+    data: err.data,
   });
 });
 

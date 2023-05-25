@@ -1,25 +1,42 @@
 const express = require("express");
 const router = express.Router();
-const { createUser } = require("../db/adapters/users");
+const jwt = require("jsonwebtoken");
+const { getUserByUsername } = require("../db/adapters/users");
+const { getAllPublicRoutinesByUser } = require("../db/adapters/routines");
 
-router.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
+router.get("/me", async (req, res, next) => {
+  try {
+    const token = req.signedCookies.token;
+    const verify = jwt.verify(token, process.env.JWT_SECRET);
 
-  if (!username || !password) {
+    const user = await getUserByUsername(verify.username);
+
+    res.send({ status: 200, status_message: "Successfully got user data", data: user });
+  } catch (error) {
     next({
-      name: "MissingCredentialsError",
-      message: "Please supply both a username and password",
+      status: 401,
+      status_message: "Incorrect credentials",
+      data: null,
     });
   }
-  if (password.length < 8) {
+});
+
+router.get("/:username/routines", async (req, res, next) => {
+  try {
+    const { username } = req.params;
+
+    const user = await getUserByUsername(username);
+    if (user === []) throw error;
+
+    const routines = await getAllPublicRoutinesByUser(username);
+    res.send({ status: 200, status_message: "Successfully got users routines", data: routines });
+  } catch (error) {
     next({
-      name: "InvalidCredentialsError",
-      message: "Password must be at least 8 characters long",
+      status: 404,
+      status_message: "Account with supplied username does not exist",
+      data: null,
     });
   }
-  const user = await createUser(username, password);
-  console.log(user);
-  res.send({ status: "success", message: "user registered", data: user });
 });
 
 module.exports = router;

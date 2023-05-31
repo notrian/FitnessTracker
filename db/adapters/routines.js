@@ -111,7 +111,7 @@ async function getAllPublicRoutinesByUser(username) {
   }
 }
 
-async function getPublicRoutinesByActivity(routineId) {
+async function getPublicRoutinesByActivity(activityId) {
   try {
     const { rows } = await client.query(
       `
@@ -121,7 +121,7 @@ async function getPublicRoutinesByActivity(routineId) {
       JOIN activities ON routine_activities.activity_id = activities.id
       WHERE routines.is_public = true AND activities.id = $1;
     `,
-      [routineId]
+      [activityId]
     );
 
     return rows;

@@ -2,9 +2,7 @@ const client = require("../client");
 
 async function getRoutineActivityById(routineActivityId) {
   try {
-    const {
-      rows: [routineActivity],
-    } = await client.query(
+    const { rows } = await client.query(
       `
       SELECT *
       FROM routine_activities
@@ -13,7 +11,7 @@ async function getRoutineActivityById(routineActivityId) {
       [routineActivityId]
     );
 
-    return routineActivity;
+    return rows;
   } catch (error) {
     throw error;
   }
@@ -21,9 +19,7 @@ async function getRoutineActivityById(routineActivityId) {
 
 async function getRoutineActivityByRoutine(routineId) {
   try {
-    const {
-      rows: [routineActivity],
-    } = await client.query(
+    const { rows } = await client.query(
       `
       SELECT *
       FROM routine_activities
@@ -32,7 +28,7 @@ async function getRoutineActivityByRoutine(routineId) {
       [routineId]
     );
 
-    return routineActivity;
+    return rows;
   } catch (error) {
     throw error;
   }

@@ -16,7 +16,7 @@ router.use("/auth", require("./auth"));
 router.use("/users", require("./users"));
 router.use("/activities", require("./activities"));
 router.use("/routines", require("./routines"));
-// router.use("/routineActivities", require("./routine_activities"));
+router.use("/routineActivities", require("./routine_activities"));
 
 router.all("*", (req, res, next) => {
   next({

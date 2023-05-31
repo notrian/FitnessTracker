@@ -9,17 +9,17 @@ router.post("/register", async (req, res, next) => {
 
   if (!username || !password) {
     next({
-      status: 406,
-      status_message: "MissingCredentialsError",
-      data: "Please supply both a username and password",
+      name: "MissingCredentialsError",
+      message: "Please supply both a username and password",
+      data: null,
     });
     return;
   }
   if (password.length < 8) {
     next({
-      status: 406,
-      status_message: "InvalidCredentialsError",
-      data: "Password must be at least 8 characters long",
+      name: "InvalidCredentialsError",
+      message: "Password must be at least 8 characters long",
+      data: null,
     });
     return;
   }
@@ -35,12 +35,12 @@ router.post("/register", async (req, res, next) => {
       signed: true,
     });
 
-    res.send({ status: 200, status_message: "Successfully registered", data: user });
+    res.send({ message: "Successfully registered", data: user });
   } catch (error) {
     next({
-      status: 401,
-      status_message: "UsernameAlreadyTaken",
-      data: "An account with that username already exists",
+      name: "UsernameAlreadyTaken",
+      message: "An account with that username already exists",
+      data: null,
     });
   }
 });
@@ -59,12 +59,12 @@ router.post("/login", async (req, res, next) => {
       signed: true,
     });
 
-    res.send({ status: 200, status_message: "Successfully logged in", data: user });
+    res.send({ message: "Successfully logged in", data: user });
   } catch (error) {
     next({
-      status: 401,
-      status_message: "InvalidLoginCredentials",
-      data: "The username or password supplied is incorrect",
+      name: "InvalidLoginCredentials",
+      message: "The username or password supplied is incorrect",
+      data: null,
     });
   }
 });
@@ -77,8 +77,7 @@ router.get("/logout", async (req, res, next) => {
       signed: true,
     });
     res.send({
-      status: 200,
-      status_message: "Successfully logged out",
+      message: "Successfully logged out",
       data: null,
     });
   } catch (error) {

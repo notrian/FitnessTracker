@@ -11,11 +11,11 @@ router.get("/me", async (req, res, next) => {
 
     const user = await getUserByUsername(verify.username);
 
-    res.send({ status: 200, status_message: "Successfully got user data", data: user });
+    res.send({ message: "Successfully got user data", data: user });
   } catch (error) {
     next({
-      status: 401,
-      status_message: "Incorrect credentials",
+      name: "Incorrect credentials",
+      message: "The login information provided is not correct",
       data: null,
     });
   }
@@ -29,11 +29,11 @@ router.get("/:username/routines", async (req, res, next) => {
     if (user === []) throw error;
 
     const routines = await getAllPublicRoutinesByUser(username);
-    res.send({ status: 200, status_message: "Successfully got users routines", data: routines });
+    res.send({ message: "Successfully got users routines", data: routines });
   } catch (error) {
     next({
-      status: 404,
-      status_message: "Account with supplied username does not exist",
+      name: "Not found",
+      message: "Account with supplied username does not exist",
       data: null,
     });
   }

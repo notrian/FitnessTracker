@@ -5,9 +5,9 @@ router.get("/health", (req, res, next) => {
     res.send("API is Healthy 😎!");
   } catch (error) {
     next({
-      status: 500,
-      status_message: "InternalServerError",
-      data: "Site is having issues",
+      name: "InternalServerError",
+      message: "Site is having issues",
+      data: null,
     });
   }
 });

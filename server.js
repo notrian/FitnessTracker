@@ -22,11 +22,10 @@ app.use("/api", require("./routes"));
 
 // Error Handler
 app.use((err, req, res, next) => {
-  res.status(err.status);
   res.send({
-    status: err.status,
-    status_message: err.status_message,
-    data: err.data,
+    name: err.name,
+    message: err.message,
+    data: err.stack || err.data,
   });
 });
 

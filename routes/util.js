@@ -6,8 +6,8 @@ const authRequired = (req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
     res.status(401).send({
-      status: 401,
-      status_message: "Unauthorized",
+      name: "Unauthorized",
+      message: "You must be logged in to do that",
       data: null,
     });
     return;

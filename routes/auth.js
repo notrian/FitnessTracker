@@ -69,7 +69,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/logout", async (req, res, next) => {
+router.get("/logout", authRequired, async (req, res, next) => {
   try {
     res.clearCookie("token", {
       sameSite: "strict",

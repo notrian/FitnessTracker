@@ -3,8 +3,9 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { getUserByUsername } = require("../db/adapters/users");
 const { getAllPublicRoutinesByUser } = require("../db/adapters/routines");
+const { authRequired } = require("./util");
 
-router.get("/me", async (req, res, next) => {
+router.get("/me", authRequired, async (req, res, next) => {
   try {
     const token = req.signedCookies.token;
     const verify = jwt.verify(token, process.env.JWT_SECRET);

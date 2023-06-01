@@ -5,9 +5,10 @@ const {
   updateRoutineActivity,
   destroyRoutineActivity,
 } = require("../db/adapters/routine_activites");
+const { authRequired } = require("./util");
 const router = express.Router();
 
-router.post("/", async (req, res, next) => {
+router.post("/", authRequired, async (req, res, next) => {
   try {
     const { routineId, activityId, count, duration } = req.body;
     const alreadyExists = await getRoutineActivityByRoutine(routineId);
@@ -36,7 +37,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.patch("/:routineActivityId", async (req, res, next) => {
+router.patch("/:routineActivityId", authRequired, async (req, res, next) => {
   try {
     const { routineActivityId } = req.params;
     const { count, duration } = req.body;
@@ -63,7 +64,7 @@ router.patch("/:routineActivityId", async (req, res, next) => {
   }
 });
 
-router.delete("/:routineActivityId", async (req, res, next) => {
+router.delete("/:routineActivityId", authRequired, async (req, res, next) => {
   try {
     const { routineActivityId } = req.params;
     const routineActivity = await destroyRoutineActivity(routineActivityId);

@@ -1,6 +1,11 @@
 const express = require("express");
-const { getAllActivities, createActivity, updateActivity } = require("../db/adapters/activities");
+const {
+  getAllActivities,
+  createActivity,
+  updateActivity,
+} = require("../db/adapters/activities");
 const { getPublicRoutinesByActivity } = require("../db/adapters/routines");
+const { authRequired } = require("./util");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -15,7 +20,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authRequired, async (req, res, next) => {
   try {
     const { name, description } = req.body;
     const newActivity = await createActivity(name, description);
@@ -28,14 +33,17 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.patch("/:activityId", async (req, res, next) => {
+router.patch("/:activityId", authRequired, async (req, res, next) => {
   try {
     const { activityId } = req.params;
     const { name, description } = req.body;
     const updatedActivity = await updateActivity(activityId, name, description);
 
     if (!updatedActivity) {
-      next({ name: "ActivityNotFound", message: "A activity with that id does not exist" });
+      next({
+        name: "ActivityNotFound",
+        message: "A activity with that id does not exist",
+      });
       return;
     }
 

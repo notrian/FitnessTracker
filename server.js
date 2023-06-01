@@ -16,9 +16,15 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(express.static(path.join(__dirname, "./client", "dist")));
 
 // Routes
 app.use("/api", require("./routes"));
+
+// Front End React Page
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "./client/dist", "index.html"));
+});
 
 // Error Handler
 app.use((err, req, res, next) => {

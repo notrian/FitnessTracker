@@ -1,0 +1,28 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.flexCentered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  text-align: center;
+  padding: 1rem;
+  background: #171717;
+  border-radius: 6px;
+  gap: 1rem;
+}
+
+/* SPACERS */
+.rem1-spacer {
+  min-height: 1rem;
+}
+.rem3-spacer {
+  min-height: 3rem;
+}

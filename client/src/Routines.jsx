@@ -1,6 +1,6 @@
 export default function Routine() {
   return (
-    <div>
+    <div className="page">
       <p>routines</p>
     </div>
   );

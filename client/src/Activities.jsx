@@ -1,6 +1,6 @@
 export default function Activities() {
   return (
-    <div>
+    <div className="page">
       <p>activities</p>
     </div>
   );

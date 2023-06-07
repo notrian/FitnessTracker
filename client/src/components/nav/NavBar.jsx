@@ -27,14 +27,14 @@ export default function NavBar() {
         >
           Activities
         </a>
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login
+        </button>
       </span>
-      <button
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        Login
-      </button>
     </div>
   );
 }

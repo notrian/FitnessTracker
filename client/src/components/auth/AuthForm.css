@@ -1,0 +1,42 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+p {
+  margin: 0;
+}
+
+input,
+input:hover,
+input:focus {
+  font-weight: 500;
+  font-size: 15px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+  transition: all 0.15s ease;
+}
+
+input:hover {
+  background: #3c3b44;
+}
+input:focus {
+  background: #51505a;
+}
+
+.show-hide {
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+  color: #9c9c9c;
+  margin-top: -1rem;
+  transition: all 0.15s ease;
+}
+
+.show-hide:hover {
+  cursor: pointer;
+  color: #d8d8d8;
+}

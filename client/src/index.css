@@ -16,10 +16,12 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #6f76ff;
   text-decoration: inherit;
+  transition: all 0.15s ease;
 }
 a:hover {
+  cursor: pointer;
   color: #535bf2;
 }
 

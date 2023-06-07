@@ -26,3 +26,31 @@
 .rem3-spacer {
   min-height: 3rem;
 }
+.rem05-spacer {
+  min-height: 0.5rem;
+}
+
+.all-routines-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.routine-div {
+  background: #171717;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0px 2px 15px -1px black;
+}
+
+.flex-row-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.activity {
+  width: 100%;
+  background: #424242;
+  padding: 1rem;
+  border-radius: 6px;
+}

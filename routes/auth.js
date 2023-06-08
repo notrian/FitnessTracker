@@ -26,9 +26,9 @@ router.post("/register", async (req, res, next) => {
 
   try {
     const user = await createUser(username, password);
-    delete user.password;
+    delete user[0].password;
 
-    const token = jwt.sign(user, process.env.JWT_SECRET);
+    const token = jwt.sign(user[0], process.env.JWT_SECRET);
     res.cookie("token", token, {
       sameSite: "strict",
       httpOnly: true,
@@ -47,6 +47,7 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
+
   try {
     const user = await getUser(username, password);
     delete user.password;

@@ -6,6 +6,8 @@ import Routines from "./Routines";
 import Activities from "./Activities";
 import Login from "./Login";
 import Register from "./Register";
+import Logout from "./Logout";
+import MyRoutines from "./MyRoutines";
 
 function App() {
   return (
@@ -15,8 +17,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/routines" element={<Routines />} />
         <Route path="/activities" element={<Activities />} />
+        <Route path="/my-routines" element={<MyRoutines />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </div>
   );

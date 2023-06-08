@@ -1,9 +1,5 @@
 const express = require("express");
-const {
-  getAllActivities,
-  createActivity,
-  updateActivity,
-} = require("../db/adapters/activities");
+const { getAllActivities, createActivity, updateActivity } = require("../db/adapters/activities");
 const { getPublicRoutinesByActivity } = require("../db/adapters/routines");
 const { authRequired } = require("./util");
 const router = express.Router();
@@ -60,7 +56,6 @@ router.get("/:activityId/routines", async (req, res, next) => {
   try {
     const { activityId } = req.params;
     const publicRoutines = await getPublicRoutinesByActivity(activityId);
-    console.log(publicRoutines);
 
     res.send({
       message: "got all public routines by activity",

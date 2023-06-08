@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./AuthForm.css";
+import { login, register } from "../../api/auth";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthForm({ authRoute }) {
   const [errorText, setErrorText] = useState("none");
@@ -8,20 +11,35 @@ export default function AuthForm({ authRoute }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setUser, setIsLoggedIn } = useAuth();
+
+  const navigate = useNavigate();
+
   async function handleClick(e) {
     e.preventDefault();
     try {
-      const resp = await fetch(`/api/auth/${authRoute}`, {
-        // Use template literal to include reqRoute in the URL
-        method: "POST",
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-      const result = await resp.json();
+      if (authRoute === "login") {
+        const result = await login(username, password);
+        handleResult(result);
+      } else if (authRoute === "register") {
+        const result = await register(username, password);
+        handleResult(result);
+      }
     } catch (err) {
       setErrorText(err.message);
+    }
+  }
+
+  function handleResult(result) {
+    if (result.data?.username) {
+      setErrorText("Successfully logged in!");
+      setUser(result.data);
+      setIsLoggedIn(true);
+      setTimeout(() => {
+        navigate("/my-routines");
+      }, 2000);
+    } else {
+      setErrorText(result.message || "An unkown error has occured.");
     }
   }
 

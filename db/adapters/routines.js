@@ -53,12 +53,31 @@ async function getAllRoutines() {
 async function getAllPublicRoutines() {
   try {
     const { rows } = await client.query(
+      //   `
+      //   SELECT *
+      //   FROM routines
+      //   JOIN routine_activities ON routines.id = routine_activities.routine_id
+      //   JOIN activities ON routine_activities.activity_id = activities.id
+      //   WHERE is_public=true;
+      // `,
       `
-      SELECT *
+      SELECT routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username AS creator_name,
+      jsonb_agg(
+        jsonb_build_object(
+          'routine_id', routine_activities.routine_id,
+          'activity_id', routine_activities.activity_id,
+          'duration', routine_activities.duration,
+          'count', routine_activities.count,
+          'name', activities.name,
+          'description', activities.description
+        )
+      ) AS activities
       FROM routines
       JOIN routine_activities ON routines.id = routine_activities.routine_id
       JOIN activities ON routine_activities.activity_id = activities.id
-      WHERE is_public=true;
+      JOIN users ON routines.creator_id = users.id
+      WHERE is_public = true
+      GROUP BY routines.id, users.username;
     `,
       []
     );

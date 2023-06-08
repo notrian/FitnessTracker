@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import "./Nav.css";
+import useAuth from "../../hooks/useAuth";
 export default function NavBar() {
   const navigate = useNavigate();
+
+  const { isLoggedIn } = useAuth();
+
   return (
     <div className="nav">
       <h2>Fitness Tracker</h2>
@@ -13,6 +17,17 @@ export default function NavBar() {
         >
           Home
         </a>
+        {isLoggedIn ? (
+          <a
+            onClick={() => {
+              navigate("/my-routines");
+            }}
+          >
+            My Routines
+          </a>
+        ) : (
+          <></>
+        )}
         <a
           onClick={() => {
             navigate("/routines");
@@ -27,13 +42,23 @@ export default function NavBar() {
         >
           Activities
         </a>
-        <button
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          Login
-        </button>
+        {isLoggedIn ? (
+          <button
+            onClick={() => {
+              navigate("/logout");
+            }}
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Login
+          </button>
+        )}
       </span>
     </div>
   );

@@ -9,7 +9,9 @@ export default function Register() {
       <div className="rem3-spacer"></div>
       <div className="rem3-spacer"></div>
       <div className="form">
+        <div className="rem1-spacer"></div>
         <h2>Register</h2>
+        <div className="rem1-spacer"></div>
         <AuthForm authRoute="register" />
         <p>
           <br />

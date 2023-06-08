@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const PORT = 3000;
 
+// Db connection
 const client = require("./db/client.js");
 client.connect();
 

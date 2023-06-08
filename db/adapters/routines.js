@@ -62,23 +62,27 @@ async function getAllPublicRoutines() {
       // `,
       `
       SELECT routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username AS creator_name,
-      jsonb_agg(
-        jsonb_build_object(
-          'routine_id', routine_activities.routine_id,
-          'activity_id', routine_activities.activity_id,
-          'duration', routine_activities.duration,
-          'count', routine_activities.count,
-          'name', activities.name,
-          'description', activities.description
-        )
-      ) AS activities
+      CASE
+          WHEN count(routine_activities.activity_id) > 0
+          THEN jsonb_agg(
+                  jsonb_build_object(
+                      'routine_id', routine_activities.routine_id,
+                      'activity_id', routine_activities.activity_id,
+                      'duration', routine_activities.duration,
+                      'count', routine_activities.count,
+                      'name', activities.name,
+                      'description', activities.description
+                  )
+              )
+          ELSE NULL
+      END AS activities
       FROM routines
-      JOIN routine_activities ON routines.id = routine_activities.routine_id
-      JOIN activities ON routine_activities.activity_id = activities.id
+      LEFT JOIN routine_activities ON routines.id = routine_activities.routine_id
+      LEFT JOIN activities ON routine_activities.activity_id = activities.id
       JOIN users ON routines.creator_id = users.id
-      WHERE is_public = true
-      GROUP BY routines.id, users.username;
-    `,
+      WHERE routines.is_public = true
+      GROUP BY routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username;
+      `,
       []
     );
 
@@ -94,15 +98,30 @@ async function getAllRoutinesByUser(username) {
 
     const { rows } = await client.query(
       `
-      SELECT *
+      SELECT routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username AS creator_name,
+      CASE
+          WHEN count(routine_activities.activity_id) > 0
+          THEN jsonb_agg(
+                  jsonb_build_object(
+                      'routine_id', routine_activities.routine_id,
+                      'activity_id', routine_activities.activity_id,
+                      'duration', routine_activities.duration,
+                      'count', routine_activities.count,
+                      'name', activities.name,
+                      'description', activities.description
+                  )
+              )
+          ELSE NULL
+      END AS activities
       FROM routines
-      JOIN routine_activities ON routines.id = routine_activities.routine_id
-      JOIN activities ON routine_activities.activity_id = activities.id
-      WHERE creator_id=$1;
-    `,
+      LEFT JOIN routine_activities ON routines.id = routine_activities.routine_id
+      LEFT JOIN activities ON routine_activities.activity_id = activities.id
+      JOIN users ON routines.creator_id = users.id
+      WHERE routines.creator_id=$1
+      GROUP BY routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username;
+      `,
       [user.id]
     );
-
     return rows;
   } catch (error) {
     throw error;
@@ -114,12 +133,35 @@ async function getAllPublicRoutinesByUser(username) {
     const user = await getUserByUsername(username);
 
     const { rows } = await client.query(
+      //   `
+      //   SELECT *
+      //   FROM routines
+      //   JOIN routine_activities ON routines.id = routine_activities.routine_id
+      //   JOIN activities ON routine_activities.activity_id = activities.id
+      //   WHERE creator_id=$1 AND is_public=true;
+      // `,
       `
-      SELECT *
+      SELECT routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username AS creator_name,
+      CASE
+          WHEN count(routine_activities.activity_id) > 0
+          THEN jsonb_agg(
+                  jsonb_build_object(
+                      'routine_id', routine_activities.routine_id,
+                      'activity_id', routine_activities.activity_id,
+                      'duration', routine_activities.duration,
+                      'count', routine_activities.count,
+                      'name', activities.name,
+                      'description', activities.description
+                  )
+              )
+          ELSE NULL
+      END AS activities
       FROM routines
-      JOIN routine_activities ON routines.id = routine_activities.routine_id
-      JOIN activities ON routine_activities.activity_id = activities.id
-      WHERE creator_id=$1 AND is_public=true;
+      LEFT JOIN routine_activities ON routines.id = routine_activities.routine_id
+      LEFT JOIN activities ON routine_activities.activity_id = activities.id
+      JOIN users ON routines.creator_id = users.id
+      WHERE routines.is_public = true AND routines.creator_id=$1
+      GROUP BY routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username;
     `,
       [user.id]
     );

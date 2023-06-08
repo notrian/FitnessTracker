@@ -19,13 +19,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function getMe() {
       const res = await getUser();
-      if (res.status === 200) {
+      if (res.data && res.data.username) {
         setUser(res.data);
         setIsLoggedIn(true);
       }
     }
     getMe();
-  }, [isLoggedIn]);
+  }, []);
 
   // For storing multiple values
   const contextValue = {

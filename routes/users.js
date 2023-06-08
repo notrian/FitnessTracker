@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { getUserByUsername } = require("../db/adapters/users");
-const { getAllPublicRoutinesByUser } = require("../db/adapters/routines");
+const { getAllPublicRoutinesByUser, getAllRoutinesByUser } = require("../db/adapters/routines");
 const { authRequired } = require("./util");
 
 router.get("/me", authRequired, async (req, res, next) => {
@@ -22,14 +22,14 @@ router.get("/me", authRequired, async (req, res, next) => {
   }
 });
 
-router.get("/:username/routines", async (req, res, next) => {
+router.get("/:username/routines", authRequired, async (req, res, next) => {
   try {
     const { username } = req.params;
 
     const user = await getUserByUsername(username);
     if (user === []) throw error;
 
-    const routines = await getAllPublicRoutinesByUser(username);
+    const routines = await getAllRoutinesByUser(username);
     res.send({ message: "Successfully got users routines", data: routines });
   } catch (error) {
     next({

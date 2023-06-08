@@ -33,7 +33,7 @@
 .all-routines-div {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .all-routine-activities-div {
@@ -54,6 +54,7 @@
   border-radius: 6px;
   padding: 1rem;
   box-shadow: 0px 2px 15px -1px black;
+  height: fit-content;
 }
 
 .flex-row-space-between {

@@ -10,14 +10,20 @@ export default function Routine({ routine }) {
         <span style={{ opacity: 0.7, fontWeight: 500 }}>{creator_name}</span>
       </div>
       <p>{goal}</p>
-      <div className="rem1-spacer"></div>
-      <h4>Activities</h4>
-      <div className="rem05-spacer"></div>
-      <div className="all-routine-activities-div">
-        {activities.map((activity) => {
-          return <RoutineActivity key={`routine-activity-${activity.activity_id}`} activity={activity} />;
-        })}
-      </div>
+      {activities ? (
+        <div>
+          <div className="rem1-spacer"></div>
+          <h4>Activities</h4>
+          <div className="rem05-spacer"></div>
+          <div className="all-routine-activities-div">
+            {activities.map((activity) => {
+              return <RoutineActivity key={`routine-activity-${activity.activity_id}`} activity={activity} />;
+            })}
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

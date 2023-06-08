@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
+import CreateRoutineForm from "./components/CreateRoutineForm";
 
 export default function MyRoutines() {
   const { isLoggedIn } = useAuth();
@@ -10,7 +11,9 @@ export default function MyRoutines() {
 
   return (
     <div className="page">
-      <p>activities</p>
+      <h1>My Routines</h1>
+      <div className="rem3-spacer"></div>
+      <CreateRoutineForm />
     </div>
   );
 }

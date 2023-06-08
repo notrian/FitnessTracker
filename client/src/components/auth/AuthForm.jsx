@@ -31,26 +31,39 @@ export default function AuthForm({ authRoute }) {
   }
 
   function handleResult(result) {
-    if (result.data?.username) {
-      setErrorText("Successfully logged in!");
+    if (result.data) {
+      setErrorText(result.message);
       setUser(result.data);
       setIsLoggedIn(true);
       setTimeout(() => {
         navigate("/my-routines");
       }, 2000);
     } else {
+      console.log(result);
       setErrorText(result.message || "An unkown error has occured.");
     }
   }
 
   return (
     <form action="" className="auth-form">
-      <input type="text" placeholder="Username" required onChange={(e) => setUsername(e.target.value)} />
-      <input type={showPassword} placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
+      <input
+        type="text"
+        placeholder="Username"
+        required
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type={showPassword}
+        placeholder="Password"
+        required
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <p
         className="show-hide"
         onClick={() => {
-          showPassword === "password" ? setShowPassword("text") : setShowPassword("password");
+          showPassword === "password"
+            ? setShowPassword("text")
+            : setShowPassword("password");
         }}
       >
         {showPassword === "password" ? "Show Password" : "Hide Password"}

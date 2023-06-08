@@ -74,3 +74,13 @@
 .routine-activity {
   width: 100%;
 }
+
+.routine-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #171717;
+  padding: 1rem;
+  border-radius: 6px;
+  max-width: 724px;
+}

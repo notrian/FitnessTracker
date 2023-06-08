@@ -61,6 +61,30 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input,
+input:hover,
+input:focus {
+  font-weight: 500;
+  font-size: 15px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+  transition: all 0.15s ease;
+}
+
+input {
+  color: white;
+  background: #2b2a33;
+}
+
+input:hover {
+  background: #3c3b44;
+}
+input:focus {
+  background: #51505a;
+}
+
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

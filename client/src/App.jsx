@@ -8,6 +8,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Logout from "./Logout";
 import MyRoutines from "./MyRoutines";
+import EditRoutine from "./EditRoutine";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/routines" element={<Routines />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/my-routines" element={<MyRoutines />} />
+        <Route path="/edit-routine/:id" element={<EditRoutine />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />

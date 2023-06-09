@@ -46,24 +46,12 @@ export default function AuthForm({ authRoute }) {
 
   return (
     <form action="" className="auth-form">
-      <input
-        type="text"
-        placeholder="Username"
-        required
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type={showPassword}
-        placeholder="Password"
-        required
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <input type="text" placeholder="Username" required onChange={(e) => setUsername(e.target.value)} />
+      <input type={showPassword} placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
       <p
         className="show-hide"
         onClick={() => {
-          showPassword === "password"
-            ? setShowPassword("text")
-            : setShowPassword("password");
+          showPassword === "password" ? setShowPassword("text") : setShowPassword("password");
         }}
       >
         {showPassword === "password" ? "Show Password" : "Hide Password"}

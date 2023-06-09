@@ -6,20 +6,20 @@ import { getUserRoutines } from "./api/user";
 import Routine from "./components/Routine";
 
 export default function MyRoutines() {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   const [routines, setRoutines] = useState([]);
 
   const { isLoggedIn, user } = useAuth();
-  if (!isLoggedIn) naviagte("/login");
 
   useEffect(() => {
     async function getAllRoutines() {
       const result = await getUserRoutines(user.username);
       setRoutines(result.data);
     }
-    getAllRoutines();
-  }, []);
+    if (!isLoggedIn) navigate("/login");
+    else getAllRoutines();
+  }, [user]);
 
   return (
     <div className="page">

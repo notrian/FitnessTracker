@@ -31,7 +31,7 @@ export default function MyRoutines() {
       <hr />
       <div className="rem3-spacer"></div>
       <div className="all-routines-div">
-        {routines
+        {Array.isArray(routines)
           ? routines.map((routine) => {
               return <Routine key={`my-routine-${routine.id}`} routine={routine} setUpdatedRoutine={setUpdatedRoutine} />;
             })

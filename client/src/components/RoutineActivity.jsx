@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { deleteRoutineActivity, updateRoutineActivity } from "../api/routineActivities";
 
-export default function RoutineActivity({ routineId, activity, setUpdatedRoutine }) {
+export default function RoutineActivity({ routineId, activity, setUpdatedRoutine, isAuthor }) {
   const { count, name, duration, description, routine_activity_id } = activity;
 
   const [newCount, setNewCount] = useState("");
@@ -39,11 +39,11 @@ export default function RoutineActivity({ routineId, activity, setUpdatedRoutine
         <p>
           x{count}, {name} ({duration} minutes)
         </p>
-        <a onClick={handleClick}>Remove</a>
+        {isAuthor ? <a onClick={handleClick}>Remove</a> : ""}
       </div>
       <p style={{ opacity: 0.75 }}>{description}</p>
       <div className="rem1-spacer"></div>
-      {!showEdit ? (
+      {isAuthor && !showEdit ? (
         <button
           onClick={() => {
             setShowEdit(!showEdit);
@@ -55,7 +55,7 @@ export default function RoutineActivity({ routineId, activity, setUpdatedRoutine
       ) : (
         ""
       )}
-      {showEdit ? (
+      {isAuthor && showEdit ? (
         <div>
           {" "}
           <input type="number" placeholder="Count" value={newCount} onChange={(e) => setNewCount(e.target.value)} style={{ width: "100px", marginRight: "0.5rem" }} />

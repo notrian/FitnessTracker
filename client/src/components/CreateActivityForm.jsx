@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createActivity } from "../api/activities";
 
-export default function CreateActivityForm() {
+export default function CreateActivityForm({ setUpdatedActivity }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errorText, setErrorText] = useState("");
@@ -12,6 +12,7 @@ export default function CreateActivityForm() {
       const newActivity = await createActivity(name, description);
 
       setErrorText(newActivity.message);
+      setUpdatedActivity(newActivity);
     } catch (error) {
       setErrorText(error.message);
       console.error(error);

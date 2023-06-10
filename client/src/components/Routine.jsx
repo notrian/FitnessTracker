@@ -66,7 +66,15 @@ export default function Routine({ routine, setUpdatedRoutine }) {
           <div className="rem05-spacer"></div>
           <div className="all-routine-activities-div">
             {activities.map((activity) => {
-              return <RoutineActivity key={`routine-activity-${activity.activity_id}`} activity={activity} routineId={id} setUpdatedRoutine={setUpdatedRoutine} />;
+              return (
+                <RoutineActivity
+                  key={`routine-activity-${activity.activity_id}`}
+                  activity={activity}
+                  routineId={id}
+                  setUpdatedRoutine={setUpdatedRoutine}
+                  isAuthor={user?.username === creator_name}
+                />
+              );
             })}
           </div>
         </div>

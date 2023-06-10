@@ -18,9 +18,11 @@ export default function Routines() {
       <h1>Routines</h1>
       <div className="rem3-spacer"></div>
       <div className="all-routines-div">
-        {routines.map((routine) => {
-          return <Routine key={`routine-${routine.id}`} routine={routine} />;
-        })}
+        {Array.isArray(routines)
+          ? routines.map((routine) => {
+              return <Routine key={`routine-${routine.id}`} routine={routine} />;
+            })
+          : ""}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import CreateActivityForm from "./components/CreateActivityForm";
 
 export default function Activities() {
   const [activities, setActivities] = useState([]);
+  const [updatedActivity, setUpdatedActivity] = useState([]);
 
   const { isLoggedIn } = useAuth();
 
@@ -15,19 +16,17 @@ export default function Activities() {
       setActivities(result);
     }
     getAllActivities();
-  }, []);
+  }, [updatedActivity]);
 
   return (
     <div className="page">
       <h1>Activities</h1>
       <div className="rem3-spacer"></div>
-      {isLoggedIn ? <CreateActivityForm /> : ""}
+      {isLoggedIn ? <CreateActivityForm setUpdatedActivity={setUpdatedActivity} /> : ""}
       <div className="rem1-spacer"></div>
       <div className="all-activities-div">
         {activities.map((activity) => {
-          return (
-            <Activity key={`activity-${activity.id}`} activity={activity} />
-          );
+          return <Activity key={`activity-${activity.id}`} activity={activity} />;
         })}
       </div>
     </div>

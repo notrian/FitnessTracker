@@ -30,7 +30,6 @@ router.post("/register", async (req, res, next) => {
 
     const token = jwt.sign(user[0], process.env.JWT_SECRET);
     res.cookie("token", token, {
-      sameSite: "strict",
       httpOnly: true,
       signed: true,
     });
@@ -55,7 +54,6 @@ router.post("/login", async (req, res, next) => {
     const token = jwt.sign(user, process.env.JWT_SECRET);
 
     res.cookie("token", token, {
-      sameSite: "strict",
       httpOnly: true,
       signed: true,
     });

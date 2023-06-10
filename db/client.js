@@ -1,5 +1,5 @@
 const { Client } = require("pg");
 
-const client = new Client("postgres://localhost:5432/fitnesstracker");
+const client = new Client(process.env.PSQL_URL);
 
 module.exports = client;

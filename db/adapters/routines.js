@@ -66,6 +66,7 @@ async function getAllPublicRoutines() {
           WHEN count(routine_activities.activity_id) > 0
           THEN jsonb_agg(
                   jsonb_build_object(
+                      'routine_activity_id', routine_activities.id,
                       'routine_id', routine_activities.routine_id,
                       'activity_id', routine_activities.activity_id,
                       'duration', routine_activities.duration,
@@ -103,6 +104,7 @@ async function getAllRoutinesByUser(username) {
           WHEN count(routine_activities.activity_id) > 0
           THEN jsonb_agg(
                   jsonb_build_object(
+                      'routine_activity_id', routine_activities.id,
                       'routine_id', routine_activities.routine_id,
                       'activity_id', routine_activities.activity_id,
                       'duration', routine_activities.duration,
@@ -146,6 +148,7 @@ async function getAllPublicRoutinesByUser(username) {
           WHEN count(routine_activities.activity_id) > 0
           THEN jsonb_agg(
                   jsonb_build_object(
+                      'routine_activity_id', routine_activities.id,
                       'routine_id', routine_activities.routine_id,
                       'activity_id', routine_activities.activity_id,
                       'duration', routine_activities.duration,

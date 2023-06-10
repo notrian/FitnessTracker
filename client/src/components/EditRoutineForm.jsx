@@ -22,23 +22,11 @@ export default function EditRoutineForm() {
   }
   return (
     <div className="routine-form" style={{ minWidth: "350px" }}>
-      <h3>Edit routine {`"${"routineName"}"`}</h3>
-      <input
-        type="text"
-        placeholder="name"
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="goal"
-        onChange={(e) => setGoal(e.target.value)}
-      />
+      <h3>Edit Routine</h3>
+      <input type="text" placeholder="name" onChange={(e) => setName(e.target.value)} />
+      <input type="text" placeholder="goal" onChange={(e) => setGoal(e.target.value)} />
       <span>
-        <input
-          type="checkbox"
-          name="isPrivate"
-          onChange={(e) => setIsPrivate(e.target.checked)}
-        />
+        <input type="checkbox" name="isPrivate" onChange={(e) => setIsPrivate(e.target.checked)} />
         <label style={{ marginLeft: "10px" }} htmlFor="isPrivate">
           Make it private
         </label>

@@ -9,6 +9,7 @@ export default function MyRoutines() {
   const navigate = useNavigate();
 
   const [routines, setRoutines] = useState([]);
+  const [updatedRoutine, setUpdatedRoutine] = useState([]);
 
   const { isLoggedIn, user } = useAuth();
 
@@ -17,22 +18,22 @@ export default function MyRoutines() {
       const result = await getUserRoutines(user.username);
       setRoutines(result.data);
     }
-    if (!isLoggedIn) navigate("/login");
-    else getAllRoutines();
-  }, [user]);
+    if (!isLoggedIn) return navigate("/login");
+    getAllRoutines();
+  }, [updatedRoutine]);
 
   return (
     <div className="page">
       <h1>My Routines</h1>
       <div className="rem3-spacer"></div>
-      <CreateRoutineForm />
+      <CreateRoutineForm setUpdatedRoutine={setUpdatedRoutine} />
       <div className="rem3-spacer"></div>
       <hr />
       <div className="rem3-spacer"></div>
       <div className="all-routines-div">
         {routines
           ? routines.map((routine) => {
-              return <Routine key={`my-routine-${routine.id}`} routine={routine} />;
+              return <Routine key={`my-routine-${routine.id}`} routine={routine} setUpdatedRoutine={setUpdatedRoutine} />;
             })
           : ""}
       </div>

@@ -13,12 +13,31 @@ export async function createRoutineActivity(routineId, activityId, count, durati
       },
     });
     const result = await resp.json();
-    console.log(result);
     return result.data;
   } catch (error) {
     console.error(error);
   }
 }
+
+export async function updateRoutineActivity(routineActivityId, count, duration) {
+  try {
+    const resp = await fetch(`/api/routineActivities/${routineActivityId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        count,
+        duration,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await resp.json();
+    return result.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function deleteRoutineActivity(routineActivityId) {
   try {
     const resp = await fetch(`/api/routineActivities/${routineActivityId}`, {

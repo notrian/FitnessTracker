@@ -12,8 +12,8 @@ export default function CreateRoutineForm({ setUpdatedRoutine }) {
 
   async function handleClick() {
     try {
+      if (!name || !goal) return setErrorText("Missing required fields");
       const newRoutine = await createRoutine(name, goal, user.id, !isPrivate);
-
       setErrorText(newRoutine.message);
       setUpdatedRoutine(newRoutine.data);
     } catch (error) {

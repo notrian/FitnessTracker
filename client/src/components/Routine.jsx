@@ -37,12 +37,18 @@ export default function Routine({ routine, setUpdatedRoutine }) {
   }
   async function handleActivityAdd() {
     try {
+      if (!currentSelection || !count || !duration) return setErrorText("Missing required fields");
       const addRoutineActivity = await createRoutineActivity(id, currentSelection, count, duration);
+      if (!addRoutineActivity) {
+        setErrorText("That activity is already apart of this routine.");
+        setShowActivities(true);
+        return;
+      }
       setShowActivities(false);
       setUpdatedRoutine(addRoutineActivity);
     } catch (error) {
       setErrorText(error.message);
-      console.error(error);
+      setShowActivities(true);
     }
   }
 

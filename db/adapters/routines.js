@@ -53,13 +53,6 @@ async function getAllRoutines() {
 async function getAllPublicRoutines() {
   try {
     const { rows } = await client.query(
-      //   `
-      //   SELECT *
-      //   FROM routines
-      //   JOIN routine_activities ON routines.id = routine_activities.routine_id
-      //   JOIN activities ON routine_activities.activity_id = activities.id
-      //   WHERE is_public=true;
-      // `,
       `
       SELECT routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username AS creator_name,
       CASE
@@ -135,13 +128,6 @@ async function getAllPublicRoutinesByUser(username) {
     const user = await getUserByUsername(username);
 
     const { rows } = await client.query(
-      //   `
-      //   SELECT *
-      //   FROM routines
-      //   JOIN routine_activities ON routines.id = routine_activities.routine_id
-      //   JOIN activities ON routine_activities.activity_id = activities.id
-      //   WHERE creator_id=$1 AND is_public=true;
-      // `,
       `
       SELECT routines.id, routines.creator_id, routines.is_public, routines.name, routines.goal, users.username AS creator_name,
       CASE

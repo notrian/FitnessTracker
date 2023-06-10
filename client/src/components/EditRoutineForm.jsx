@@ -6,10 +6,14 @@ export default function EditRoutineForm() {
   const [goal, setGoal] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [errorText, setErrorText] = useState("");
+
   const navigate = useNavigate();
+
   const { id } = useParams();
+
   async function handleClick() {
     try {
+      if (!name || !goal) return setErrorText("Missing required fields");
       const newRoutine = await editRoutine(id, !isPrivate, name, goal);
       setErrorText(newRoutine.message);
       setTimeout(() => {

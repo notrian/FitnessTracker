@@ -8,6 +8,7 @@ export default function CreateActivityForm() {
 
   async function handleClick() {
     try {
+      if (!name || !description) return setErrorText("Missing required fields");
       const newActivity = await createActivity(name, description);
 
       setErrorText(newActivity.message);
@@ -20,16 +21,8 @@ export default function CreateActivityForm() {
   return (
     <div className="routine-form">
       <h3>Create a new activity</h3>
-      <input
-        type="text"
-        placeholder="name"
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="description"
-        onChange={(e) => setDescription(e.target.value)}
-      />
+      <input type="text" placeholder="name" onChange={(e) => setName(e.target.value)} />
+      <input type="text" placeholder="description" onChange={(e) => setDescription(e.target.value)} />
       <button onClick={handleClick}>Create</button>
       <p>{errorText}</p>
     </div>

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": "https://fitness-tracker-o11j.onrender.com/",
+      "/api": "http://localhost:3000",
     },
   },
 });
